@@ -1,0 +1,8 @@
+<li *ngFor="let user of userData">
+  <span>{{user.id}} {{user.name}}</span>
+  <span *ngFor="let userTodo of todoData">
+    <div *ngIf="userTodo.userId==user.id">
+      {{userTodo.title}}
+    </div>
+  </span>
+</li>

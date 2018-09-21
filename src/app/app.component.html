@@ -1,0 +1,20 @@
+<mat-sidenav-container class="example-container" autosize>
+  <mat-sidenav #sidenav class="example-sidenav" mode="push">
+  
+    <mat-nav-list>
+        <mat-list-item><a mat-button routerLink="/main/todo">ToDo</a></mat-list-item>
+        <mat-list-item><a mat-button routerLink="/main/posts">Posts</a></mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <div class="example-sidenav-content">
+    <button class="menu" type="button" mat-mini-fab (click)="sidenav.toggle()" *ngIf="show">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <button mat-button (click)="gotoMain()">Main </button>
+    <button mat-button (click)="gotoInfo()">Info </button>
+  </div>
+  <router-outlet></router-outlet>
+</mat-sidenav-container>
+
+<!-- <app-info></app-info> -->
