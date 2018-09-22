@@ -1,0 +1,19 @@
+table {
+    width: 100%;
+  }
+
+  button {
+    margin: 16px 8px;
+  }
+
+  tr.selected-edit-row {
+    height: 0;
+  }
+
+  .editor-container {
+    height: 60px;
+  }
+
+  .editor-input{
+    padding-right: 10px;
+  }
