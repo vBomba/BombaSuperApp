@@ -9,7 +9,9 @@ import {
   MatListModule,
   MatTableModule,
   MatInputModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatCardModule,
+  MatDialogModule
 } from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
@@ -18,6 +20,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { InfoComponent } from './Info/info.component';
 import { TodoComponent } from './todo/todo.component';
 import { PostsComponent } from './posts/posts.component';
+import { PostsDialogComponent } from './postsDialog/posts.dialog.component';
 import { MainComponent } from './main/main.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
@@ -34,7 +37,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent, InfoComponent, TodoComponent, PostsComponent, MainComponent
+    AppComponent, InfoComponent, TodoComponent, PostsComponent, MainComponent, PostsDialogComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -49,6 +52,8 @@ const appRoutes: Routes = [
     MatTableModule,
     MatInputModule,
     MatToolbarModule,
+    MatCardModule,
+    MatDialogModule,
     RouterModule.forRoot(
       appRoutes,
     ),
@@ -56,6 +61,7 @@ const appRoutes: Routes = [
     ...modules
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PostsDialogComponent]
 })
 export class AppModule { }

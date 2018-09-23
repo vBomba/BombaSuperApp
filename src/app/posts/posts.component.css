@@ -1,33 +1,29 @@
-table {
-    width: 100%;
-}
-
 button {
     margin: 16px 8px;
 }
 
-tr.selected-edit-row {
-    height: 0;
-}
-
-.editor-container {
-    height: 60px;
-    margin: 10px 0 10px 0;
-}
-
 .editor-input {
     padding-right: 10px;
-    width: 25%;
-}
-
-.selected-row {
-    background-color: rgba(234, 106, 224, 0.11);
-}
-
-.completed-row {
-    background-color: rgba(197, 197, 197, 0.199);
+    width: 75%;
 }
 
 .create-form {
     text-align: center;
+}
+
+.post-card {
+    margin:10px 10px;
+    width: calc(23.7% - 50px);
+    height: 210px;
+    position: relative;
+    overflow: hidden;
+    float:left;
+}
+
+.post{
+    vertical-align: top;
+}
+.post-buttons {
+    position: absolute;
+    bottom:25px;
 }

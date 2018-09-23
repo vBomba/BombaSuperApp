@@ -1,0 +1,21 @@
+<form ngNativeValidate class="create-form" (ngSubmit)="saveNewPost(name.value, surname.value, title.value, body.value)">
+
+    <mat-form-field class="editor-input">
+        <input required minlength="3" matInput value="{{data.name}}" #name placeholder="Name">
+    </mat-form-field>
+
+    <mat-form-field class="editor-input">
+        <input required minlength="3" matInput value="{{data.surname}}" #surname placeholder="Surname">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="editor-input">
+        <input required minlength="6" matInput value="{{data.title}}" #title placeholder="Title">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="editor-input">
+        <input required minlength="6" matInput value="{{data.body}}" #body placeholder="Body">
+    </mat-form-field>
+    <br>
+    <button type="submit" mat-raised-button> Save </button>
+    <button mat-raised-button (click)="dialogRef.close()"> Cancel </button>
+</form>
