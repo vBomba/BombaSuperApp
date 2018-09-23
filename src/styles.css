@@ -1,3 +1,26 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-html, body, .example-container { height: 100%; }
 
+html,
+body {
+    overflow: hidden;
+    margin:0;
+}
+
+html,
+body,
+.example-container {
+    height: 100%;
+    width: 100%;
+}
+
+.app-title{
+    margin:0 10px;
+}
+
+.app-wrapper{
+    padding: 10px;
+}
+
+.active-link{
+    border: 1px solid #ccc !important;
+}

@@ -1,20 +1,26 @@
 <mat-sidenav-container class="example-container" autosize>
   <mat-sidenav #sidenav class="example-sidenav" mode="push">
-  
+
     <mat-nav-list>
-        <mat-list-item><a mat-button routerLink="/main/todo">ToDo</a></mat-list-item>
-        <mat-list-item><a mat-button routerLink="/main/posts">Posts</a></mat-list-item>
+      <mat-list-item><a mat-button routerLink="/main/todo" routerLinkActive="active-link">ToDo</a></mat-list-item>
+      <mat-list-item><a mat-button routerLink="/main/posts" routerLinkActive="active-link">Posts</a></mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
 
   <div class="example-sidenav-content">
-    <button class="menu" type="button" mat-mini-fab (click)="sidenav.toggle()" *ngIf="show">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <button mat-button (click)="gotoMain()">Main </button>
-    <button mat-button (click)="gotoInfo()">Info </button>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <button class="menu" type="button" mat-mini-fab (click)="sidenav.toggle()" *ngIf="show">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span class="app-title">BombaSuperApp</span>
+        <span class="example-spacer"></span>
+        <button routerLink="/main" routerLinkActive="active-link" mat-button (click)="switch(true)">Main </button>
+        <button routerLink="/info" routerLinkActive="active-link" mat-button (click)="switch(false)">Info </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
   </div>
-  <router-outlet></router-outlet>
+ <div class="app-wrapper"> <router-outlet></router-outlet></div>
 </mat-sidenav-container>
 
 <!-- <app-info></app-info> -->

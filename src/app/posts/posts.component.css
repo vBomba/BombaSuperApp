@@ -1,0 +1,33 @@
+table {
+    width: 100%;
+}
+
+button {
+    margin: 16px 8px;
+}
+
+tr.selected-edit-row {
+    height: 0;
+}
+
+.editor-container {
+    height: 60px;
+    margin: 10px 0 10px 0;
+}
+
+.editor-input {
+    padding-right: 10px;
+    width: 25%;
+}
+
+.selected-row {
+    background-color: rgba(234, 106, 224, 0.11);
+}
+
+.completed-row {
+    background-color: rgba(197, 197, 197, 0.199);
+}
+
+.create-form {
+    text-align: center;
+}

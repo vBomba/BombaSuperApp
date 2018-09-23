@@ -23,9 +23,10 @@ export class TodoComponent implements OnInit {
   todoList: Todo[];
   selectedToDo: Todo;
   cloned: Todo;
+  show = false;
 
-  constructor() { }
   ngOnInit() {
+
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
       .then((userList: any[]) => {
@@ -39,46 +40,61 @@ export class TodoComponent implements OnInit {
             this.todoList = [];
             todoData.forEach(item => {
               if (usersMap.has(item.userId) && this.todoList.length < 100) {
-                const newItem = new Todo();
-                newItem.id = item.id;
                 const username = usersMap.get(item.userId).split(' ');
-                newItem.name = username[0];
-                newItem.surname = username[1];
-                newItem.title = item.title;
-                newItem.completed = item.completed;
+                const newItem = new Todo(item.id, username[0], username[1], item.title, item.completed);
                 this.todoList.push(newItem);
               }
             });
-            console.log(this.todoList);
-            // }).filter( function(elem) {
-            //   return elem;
-            // });
           });
       });
   }
 
+  switch(show: boolean) {
+    this.show = show;
+  }
+
   refreshCompleted(todo: Todo, event) {
-    console.log(todo, event);
+    this.fetchDB(todo, 'PUT');
   }
 
-  createToDo() {
+  saveNewToDo(name: string, surname: string, title: string, table) {
+    const createItem = new Todo(Math.max.apply(Math, this.todoList.map(todo => todo.id)) + 1, name, surname, title, false);
+    this.todoList.unshift(createItem);
+    this.show = false;
+    table.renderRows();
+    this.fetchDB(createItem, 'POST');
   }
 
-  removeToDo(todo: Todo) {
-    this.todoList = this.todoList.splice(this.todoList.indexOf(todo));
+  removeToDo(todoId: number, table) {
+    this.todoList.splice(this.todoList.map((item) => item.id).indexOf(todoId), 1);
     this.selectedToDo = undefined;
+    fetch('https://jsonplaceholder.typicode.com/todos/' + todoId, {
+      method: 'DELETE'
+    });
+    table.renderRows();
   }
 
-  saveToDo(todo: Todo, table) {
-    const index = this.todoList.indexOf(todo);
-    this.todoList[index] = this.cloned;
+  editToDo(name: string, surname: string, title: string, table) {
+    const todo: Todo = new Todo(this.cloned.id, name, surname, title, this.cloned.completed);
+    const index = this.todoList.map((item) => item.id).indexOf(todo.id);
+    this.todoList[index] = todo;
     this.selectedToDo = undefined;
     table.renderRows();
+    this.fetchDB(todo, 'PUT');
   }
 
   selectItem(row) {
     this.selectedToDo = row;
     this.cloned = Todo.clone(row);
-    // console.log(this.selectedToDo);
+  }
+
+  private fetchDB(todo: Todo, type: string) {
+    fetch('https://jsonplaceholder.typicode.com/todos/' + todo.id, {
+      method: type,
+      body: JSON.stringify(todo),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    });
   }
 }
