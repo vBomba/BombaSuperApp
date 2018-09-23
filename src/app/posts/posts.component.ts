@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Todo } from './model/post';
+import { Post } from './model/post';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { MatTable } from '@angular/material';
 
@@ -18,11 +18,11 @@ import { MatTable } from '@angular/material';
 
 export class PostsComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'surname', 'title', 'completed'];
+  displayedColumns: string[] = ['name', 'surname', 'title', 'body'];
 
-  todoList: Todo[];
-  selectedToDo: Todo;
-  cloned: Todo;
+  postList: Post[];
+  selectedPost: Post;
+  cloned: Post;
   show = false;
 
   ngOnInit() {
@@ -34,15 +34,15 @@ export class PostsComponent implements OnInit {
         userList.slice(0, 3).forEach(user => {
           usersMap.set(user.id, user.name);
         });
-        fetch('https://jsonplaceholder.typicode.com/todos')
+        fetch('https://jsonplaceholder.typicode.com/posts')
           .then(response => response.json())
-          .then((todoData: any[]) => {
-            this.todoList = [];
-            todoData.forEach(item => {
-              if (usersMap.has(item.userId) && this.todoList.length < 100) {
+          .then((postData: any[]) => {
+            this.postList = [];
+            postData.forEach(item => {
+              if (usersMap.has(item.userId) && this.postList.length < 100) {
                 const username = usersMap.get(item.userId).split(' ');
-                const newItem = new Todo(item.id, username[0], username[1], item.title, item.completed);
-                this.todoList.push(newItem);
+                const newItem = new Post(item.id, username[0], username[1], item.title, item.body);
+                this.postList.push(newItem);
               }
             });
           });
@@ -53,45 +53,41 @@ export class PostsComponent implements OnInit {
     this.show = show;
   }
 
-  refreshCompleted(todo: Todo, event) {
-    this.fetchDB(todo, 'PUT');
-  }
-
-  saveNewToDo(name: string, surname: string, title: string, table) {
-    const createItem = new Todo(Math.max.apply(Math, this.todoList.map(todo => todo.id)) + 1, name, surname, title, false);
-    this.todoList.unshift(createItem);
+  saveNewPost(name: string, surname: string, title: string, body: string, table) {
+    const createItem = new Post(Math.max.apply(Math, this.postList.map(post => post.id)) + 1, name, surname, title, body);
+    this.postList.unshift(createItem);
     this.show = false;
     table.renderRows();
     this.fetchDB(createItem, 'POST');
   }
 
-  removeToDo(todoId: number, table) {
-    this.todoList.splice(this.todoList.map((item) => item.id).indexOf(todoId), 1);
-    this.selectedToDo = undefined;
-    fetch('https://jsonplaceholder.typicode.com/todos/' + todoId, {
+  removePost(postId: number, table) {
+    this.postList.splice(this.postList.map((item) => item.id).indexOf(postId), 1);
+    this.selectedPost = undefined;
+    fetch('https://jsonplaceholder.typicode.com/posts/' + postId, {
       method: 'DELETE'
     });
     table.renderRows();
   }
 
-  editToDo(name: string, surname: string, title: string, table) {
-    const todo: Todo = new Todo(this.cloned.id, name, surname, title, this.cloned.completed);
-    const index = this.todoList.map((item) => item.id).indexOf(todo.id);
-    this.todoList[index] = todo;
-    this.selectedToDo = undefined;
+  editPost(name: string, surname: string, title: string, body: string, table) {
+    const post: Post = new Post(this.cloned.id, name, surname, title, body);
+    const index = this.postList.map((item) => item.id).indexOf(post.id);
+    this.postList[index] = post;
+    this.selectedPost = undefined;
     table.renderRows();
-    this.fetchDB(todo, 'PUT');
+    this.fetchDB(post, 'PUT');
   }
 
   selectItem(row) {
-    this.selectedToDo = row;
-    this.cloned = Todo.clone(row);
+    this.selectedPost = row;
+    this.cloned = Post.clone(row);
   }
 
-  private fetchDB(todo: Todo, type: string) {
-    fetch('https://jsonplaceholder.typicode.com/todos/' + todo.id, {
+  private fetchDB(post: Post, type: string) {
+    fetch('https://jsonplaceholder.typicode.com/posts/' + post.id, {
       method: type,
-      body: JSON.stringify(todo),
+      body: JSON.stringify(post),
       headers: {
         'Content-type': 'application/json; charset=UTF-8'
       }

@@ -1,15 +1,15 @@
-export class Todo {
+export class Post {
     constructor(public id: number,
         public name: string,
         public surname: string,
         public title: string,
-        public completed: boolean) { }
+        public body: string) { }
 
-    static clone(original: Todo) {
-        return new Todo(original.id,
+    static clone(original: Post) {
+        return new Post(original.id,
             original.name,
             original.surname,
             original.title,
-            original.completed);
+            original.body);
     }
 }
